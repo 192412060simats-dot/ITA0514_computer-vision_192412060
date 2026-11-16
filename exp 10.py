@@ -1,45 +1,27 @@
-
 import cv2
 import matplotlib.pyplot as plt
-from google.colab import files
 
-# Upload an image
-uploaded = files.upload()
-filename = next(iter(uploaded))
+img = cv2.imread(r"C:\Users\student\Documents\COMPUTER VISION lab\cv IMAGE 1.jfif")
 
-# Read the image
-image = cv2.imread(filename)
+if img is None:
+    print("Image not found")
+else:
+    rotated = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
 
-if image is None:
-    raise ValueError("Error: Unable to read the image.")
+    original = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    result = cv2.cvtColor(rotated, cv2.COLOR_BGR2RGB)
 
-# Convert image from BGR to RGB
-image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    plt.figure(figsize=(10, 5))
 
-# Rotate the image 90 degrees clockwise
-rotated = cv2.rotate(image, cv2.ROTATE_90_CLOCKWISE)
-rotated_rgb = cv2.cvtColor(rotated, cv2.COLOR_BGR2RGB)
+    plt.subplot(1, 2, 1)
+    plt.imshow(original)
+    plt.title("Original Image")
+    plt.axis("off")
 
-# Display original and rotated images
-plt.figure(figsize=(10, 5))
+    plt.subplot(1, 2, 2)
+    plt.imshow(result)
+    plt.title("90 Degree Clockwise Rotation")
+    plt.axis("off")
 
-plt.subplot(1, 2, 1)
-plt.imshow(image_rgb)
-plt.title("Original Image")
-plt.axis("off")
-
-plt.subplot(1, 2, 2)
-plt.imshow(rotated_rgb)
-plt.title("90-Degree Clockwise Rotation")
-plt.axis("off")
-
-plt.tight_layout()
-plt.savefig("output.png")
-plt.show()
-
-# Save rotated image
-cv2.imwrite("rotated_image.png", rotated)
-
-# Download output files
-files.download("output.png")
-files.download("rotated_image.png")
+    plt.tight_layout()
+    plt.show()
